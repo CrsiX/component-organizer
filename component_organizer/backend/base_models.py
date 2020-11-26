@@ -23,6 +23,9 @@ class ContainerModel(models.Model):
         else:
             return self.name
 
+    def children(self):
+        return self.containermodel_set.all()
+
     def __str__(self):
         return f"Container '{self.name}'"
 
