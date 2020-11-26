@@ -5,11 +5,17 @@ from rest_framework.response import Response
 
 from backend.models import ContainerModel as _ContainerModel
 from api.serializers import ContainerSerializer as _ContainerSerializer
+from api.serializers import SimpleContainerSerializer as _SimpleContainerSerializer
 
 
 class ContainerViewSet(_ModelViewSet):
     queryset = _ContainerModel.objects.all()
     serializer_class = _ContainerSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = _ContainerModel.objects.all()
+        serializer = _SimpleContainerSerializer(queryset, many=True, context={"request": request})
+        return Response(serializer.data)
 
     @action(methods=["GET"], detail=True)
     def path(self, request, pk, **kwargs):
