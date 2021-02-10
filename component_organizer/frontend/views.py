@@ -45,5 +45,20 @@ class CreateContainerView(CreateView):
         return self.render_to_response(self.get_context_data(container=container))
 
 
+class ListAllView(TemplateView):
+    template_name = "frontend/list_all.html"
+
+    def get(self, request: HttpRequest, *args, **kwargs):
+        containers = Container.objects.all().exclude(id=0)
+
+        return render(
+            request,
+            self.template_name,
+            {
+                "containers": containers
+            }
+        )
+
+
 def redirect_to_root(*args, **kwargs):
     return HttpResponseRedirect(Container.objects.get(id=0).url)
