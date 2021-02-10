@@ -1,2 +1,2 @@
-from backend.base_models import *
-from backend.template_models import *
+from backend.models.base import *
+from backend.models.template import *
